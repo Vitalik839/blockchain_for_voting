@@ -1,0 +1,55 @@
+@startuml
+
+    class RegistrationForm {
+        - PageController pageController
+        - VBox getRegistrationForm()
+        + RegistrationForm(PageController pageController)
+    }
+    class LoginForm {
+        - PageController pageController
+        - VBox getLoginForm()
+        + LoginForm(PageController pageController)
+    }
+    class PageController {
+        - Stage stage
+        + PageController(Stage stage)
+        + void showRegistrationForm()
+        + void showLoginForm()
+        + void showCandidatesPage(int id)
+    }
+
+    class CandidatesPage {
+            - PageController pageController
+            - int selectedCandidateIndex = -1
+            - String[] bio
+            - String[] batches
+            + CandidatesPage(PageController pageController)
+            + VBox getCandidatesPage(int id_user)
+    }
+
+
+    class DatabaseManager {
+        + void connect(String url, String username, String password)
+        + void registerUser(int id, int phone, String lastName, String firstName, String password)
+        + int getUserId(int id)
+    }
+
+    class DatabaseManager {
+            - Connection connection
+            + void connect(String url, String username, String password) throws SQLException
+            + Connection getConnection()
+            + void closeConnection() throws SQLException
+            + boolean registerUser(int rnokpp, int number, String surname, String name, String password)
+            + boolean userVote(int id_user, int choice)
+            + int getUserId(int rnokpp)
+    }
+
+
+PageController --> RegistrationForm
+PageController --> LoginForm
+PageController --> CandidatesPage
+
+RegistrationForm --> DatabaseManager
+CandidatesPage --> DatabaseManager
+
+@enduml
